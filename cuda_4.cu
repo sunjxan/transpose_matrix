@@ -1,6 +1,6 @@
 #include "common.hpp"
 
-// 使用共享内存
+// 使用矩形共享内存
 
 __global__ void kernel(const real (*A)[N], real (*B)[M])
 {
@@ -11,7 +11,7 @@ __global__ void kernel(const real (*A)[N], real (*B)[M])
 
     unsigned pos = ty * bdx + tx;
     if (iy < M && ix < N) {
-        s_a[pos] = __ldg(&A[iy][ix]);
+        s_a[pos] = A[iy][ix];
     } 
     __syncthreads();
 
@@ -30,7 +30,7 @@ void transpose_matrix(const real *A, real *B)
     const real (*nA)[N] = reinterpret_cast<decltype(nA)>(A);
     real (*nB)[M] = reinterpret_cast<decltype(nB)>(B);
 
-    dim3 block_size(15, 17);
+    dim3 block_size(31, 33);
     // N是列对应x，M是行对应y
     dim3 grid_size(DIVUP(N, block_size.x), DIVUP(M, block_size.y));
     kernel<<<grid_size, block_size, block_size.y * block_size.x * real_size>>>(nA, nB);

@@ -1,6 +1,6 @@
 #include "common.hpp"
 
-// 朴素实现，注意iy和ix对行列的编码
+// 朴素实现，注意ix和iy对行列的编码
 
 __global__ void kernel(const real (*A)[N], real (*B)[M])
 {
