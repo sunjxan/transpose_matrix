@@ -5,7 +5,7 @@
 #include "error.h"
 
 constexpr unsigned SKIP = 5, REPEATS = 5;
-constexpr size_t M = 5120, N = 4096;
+constexpr size_t M = 5123, N = 4100;
 constexpr size_t real_size = sizeof(real);
 constexpr size_t MN = M * N;
 constexpr size_t MN_size = MN * real_size;
