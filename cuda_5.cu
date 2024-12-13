@@ -11,7 +11,7 @@ __global__ void kernel(const real (*A)[N], real (*B)[M])
 
     if (iy < M && ix < N) {
         s_a[ty * bdx + tx] = A[iy][ix];
-    } 
+    }
     __syncthreads();
 
     unsigned niy = ix - tx + ty;

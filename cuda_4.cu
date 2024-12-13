@@ -12,7 +12,7 @@ __global__ void kernel(const real (*A)[N], real (*B)[M])
     unsigned pos = ty * bdx + tx;
     if (iy < M && ix < N) {
         s_a[pos] = A[iy][ix];
-    } 
+    }
     __syncthreads();
 
     unsigned nty = pos / bdy;
