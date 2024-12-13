@@ -1,14 +1,17 @@
 #include "common.hpp"
 
-// 使用__ldg加载
+// 对角转置
 
 __global__ void kernel(const real (*A)[N], real (*B)[M])
 {
-    unsigned iy = blockIdx.y * blockDim.y + threadIdx.y;
-    unsigned ix = blockIdx.x * blockDim.x + threadIdx.x;
+
+    unsigned int blk_y = blockIdx.y;
+    unsigned int blk_x = (blockIdx.x + blockIdx.y) % gridDim.x;
+    unsigned iy = blk_y * blockDim.y + threadIdx.y;
+    unsigned ix = blk_x * blockDim.x + threadIdx.x;
 
     if (iy < N && ix < M) {
-        B[iy][ix] = __ldg(&A[ix][iy]);
+        B[iy][ix] = A[ix][iy];
     }
 }
 
