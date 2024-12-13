@@ -16,6 +16,7 @@ __global__ void kernel(const real (*A)[N], real (*B)[M])
 
     unsigned niy = ix - tx + ty;
     unsigned nix = iy - ty + tx;
+
     if (niy < N && nix < M) {
         B[niy][nix] = s_a[tx * bdx + ty];
     }

@@ -4,9 +4,8 @@
 
 __global__ void kernel(const real (*A)[N], real (*B)[M])
 {
-
-    unsigned int blk_y = blockIdx.y;
-    unsigned int blk_x = (blockIdx.x + blockIdx.y) % gridDim.x;
+    unsigned blk_y = blockIdx.y;
+    unsigned blk_x = (blockIdx.x + blockIdx.y) % gridDim.x;
     unsigned iy = blk_y * blockDim.y + threadIdx.y;
     unsigned ix = blk_x * blockDim.x + threadIdx.x;
 

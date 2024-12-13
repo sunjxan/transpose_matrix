@@ -9,14 +9,17 @@ __global__ void kernel(const real (*A)[N], real (*B)[M])
 
     extern __shared__ real s_a[];
 
+    unsigned pos = ty * bdx + tx;
     if (iy < M && ix < N) {
-        s_a[ty * bdx + tx] = __ldg(&A[iy][ix]);
+        s_a[pos] = __ldg(&A[iy][ix]);
     } 
     __syncthreads();
 
-    unsigned v = ty * bdx + tx, nty = v / bdy, ntx = v % bdy;
+    unsigned nty = pos / bdy;
+    unsigned ntx = pos % bdy;
     unsigned niy = ix - tx + nty;
     unsigned nix = iy - ty + ntx;
+
     if (niy < N && nix < M) {
         B[niy][nix] = s_a[ntx * bdx + nty];
     }
